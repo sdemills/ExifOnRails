@@ -1,0 +1,10 @@
+<h1>Editing fileelement</h1>
+
+<form action="/fileelements/<%= @fileelement.id.to_s%>" method="post" enctype="multipart/form-data">
+  <input name="_method" type="hidden" value="put" />
+  <input name="fileelement" type="file" />
+  <input name="commit" type="submit" value="Update" />
+</form>
+
+<%= link_to 'Show', @fileelement %> |
+<%= link_to 'Back', fileelements_path %>

@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Filename:</b>
+  <%= @fileelement.filename %>
+</p>
+
+<p>
+  <b>Content type:</b>
+  <%= @fileelement.content_type %>
+</p>
+
+
+<%= link_to 'Edit', edit_fileelement_path(@fileelement) %> |
+<%= link_to 'Back', fileelements_path %>
