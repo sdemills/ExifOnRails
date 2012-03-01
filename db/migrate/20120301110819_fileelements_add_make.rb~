@@ -1,0 +1,9 @@
+class FileelementsAddMake < ActiveRecord::Migration
+  def up
+    add
+  end
+
+  def down
+    
+  end
+end

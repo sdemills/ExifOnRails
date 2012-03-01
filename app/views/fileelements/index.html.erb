@@ -2,23 +2,26 @@
 
 <table>
   <tr>
+    <th>Thumnail</th>
     <th>Filename</th>
+    <th>Make</th>
+    <th>Model</th>
     <th>Content type</th>
-    <th></th>
-    <th></th>
-    <th></th>
+    <th>Command</th>
   </tr>
 
 <% @fileelements.each do |fileelement| %>
   <tr>
-    <td>
-      <%= image_tag url_for(:action => 'download', :id => fileelement.id),
+    <th>
+      <%= image_tag url_for(:action => 'viewer', :id => fileelement.id),
       :alt => fileelement.filename, :size => '100x100' %>
-    </td>
-    <td><%= fileelement.filename %></td>
-    <td><%= fileelement.content_type %></td>
-    <td><%= link_to 'Show', fileelement %></td>
-    <td><%= link_to 'Delete', fileelement, confirm: 'Are you sure?', method: :delete %></td>
+    </th>
+    <th><%= fileelement.filename %></th>
+    <th><%= fileelement.make %></th>
+    <th><%= fileelement.model %></th>
+    <th><%= fileelement.content_type %></th>
+    <th><%= link_to 'Show', fileelement %> | 
+    <th><%= link_to 'Delete', fileelement, confirm: 'Are you sure?', method: :delete %></th>
   </tr>
 <% end %>
 </table>

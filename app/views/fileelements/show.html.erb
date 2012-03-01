@@ -8,11 +8,11 @@
 <p>
   <b>Content type:</b>
   <%= @fileelement.content_type %>
-  <%= image_tag url_for(:action => 'download', :id => @fileelement.id), 
+  <%= image_tag url_for(:action => 'viewer', :id => @fileelement.id), 
   :alt => @fileelement.filename %>
 </p>
 
-<%= link_to 'Download', :action => 'download', :id => @fileelement.id %> |
+<%= link_to 'Download', :action => 'downloadfile', :id => @fileelement.id %> |
 <%= link_to 'Delete', @fileelement, confirm: 'Are you sure?', method: :delete %>
 <%= link_to 'Back', fileelements_path %>
 

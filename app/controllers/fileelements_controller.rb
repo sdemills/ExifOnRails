@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 require 'exifr'
+require 'pp'
+
 class FileelementsController < ApplicationController
   skip_before_filter :verify_authenticity_token ,:only=>[:create,:update]   # つけ忘れに注意
 
@@ -71,7 +73,14 @@ class FileelementsController < ApplicationController
     f.close
     
     exif = EXIFR::JPEG.new(path)
-    print "カメラ: ", exif.make, " ", exif.model, "\n"
+    print "カメラ: ", exif.make, ", Model: ", exif.model, "\n"
+
+pp @fileelement
+
+    @fileelement.make = exif.make
+pp @fileelement
+    @fileelement.model = exif.model
+pp @fileelement
          
     respond_to do |format|
       if @fileelement.save
@@ -96,7 +105,7 @@ class FileelementsController < ApplicationController
     end
   end
 
-  def download
+  def viewer
     @fileelement = Fileelement.find(params[:id])
     send_data(@fileelement.data,
               :filename => @fileelement.filename, 
@@ -104,4 +113,10 @@ class FileelementsController < ApplicationController
               :disposition => 'inline')
   end
 
+  def downloadfile
+    @fileelement = Fileelement.find(params[:id])
+    send_data(@fileelement.data,
+              :filename => @fileelement.filename, 
+              :content_type => @fileelement.content_type)
+  end
 end
