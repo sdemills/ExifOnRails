@@ -1,6 +1,6 @@
 Uploader::Application.routes.draw do
   resources :fileelements
-
+  root :to => 'fileelements#index'
   match 'fileelements/download/:id' => 'fileelements#download'
 
   # The priority is based upon order of creation:

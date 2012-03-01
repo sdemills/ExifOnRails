@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+require 'exifr'
 class FileelementsController < ApplicationController
   skip_before_filter :verify_authenticity_token ,:only=>[:create,:update]   # つけ忘れに注意
 
@@ -39,6 +40,10 @@ class FileelementsController < ApplicationController
   # POST /fileelements.json
   def create
     @fileelement = Fileelement.new(params[:fileelement])
+    
+    f = File.new("public/files/#{@fileelement.filename.to_s}", "w+b")
+    f.write @fileelement.data
+    f.close
 
     respond_to do |format|
       if @fileelement.save
@@ -53,42 +58,27 @@ class FileelementsController < ApplicationController
 
   # PUT /fileelements/1
   # PUT /fileelements/1.json
-def create
+  def create
     f = params[:fileelement]
     @fileelement = Fileelement.new
     @fileelement.filename = f.original_filename
     @fileelement.content_type = f.content_type
     @fileelement.data = f.read
-
+    
+    path = "public/files/#{@fileelement.filename.to_s}"
+    f = File.new(path, "w+b")
+    f.write @fileelement.data
+    f.close
+    
+    exif = EXIFR::JPEG.new(path)
+    print "カメラ: ", exif.make, " ", exif.model, "\n"
+         
     respond_to do |format|
       if @fileelement.save
         format.html { redirect_to(@fileelement, :notice => 'Fileelement was successfully created.') }
         format.xml  { render :xml => @fileelement, :status => :created, :location => @fileelement }
       else
         format.html { render :action => "new" }
-        format.xml  { render :xml => @fileelement.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
-
-  # PUT /fileelements/1
-  # PUT /fileelements/1.xml
-  def update
-    @fileelement = Fileelement.find(params[:id])
-
-    h = Hash::new
-    f = params[:fileelement]
-    h[:id] = params[:id]
-    h[:filename] = f.original_filename
-    h[:content_type] = f.content_type
-    h[:data] = f.read
-
-    respond_to do |format|
-      if @fileelement.update_attributes(h)
-        format.html { redirect_to(@fileelement, :notice => 'Fileelement was successfully updated.') }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
         format.xml  { render :xml => @fileelement.errors, :status => :unprocessable_entity }
       end
     end

@@ -1,4 +1,4 @@
-<h1>Listing fileelements</h1>
+<h1>Image uploader</h1>
 
 <table>
   <tr>
@@ -18,11 +18,11 @@
     <td><%= fileelement.filename %></td>
     <td><%= fileelement.content_type %></td>
     <td><%= link_to 'Show', fileelement %></td>
-    <td><%= link_to 'Destroy', fileelement, confirm: 'Are you sure?', method: :delete %></td>
+    <td><%= link_to 'Delete', fileelement, confirm: 'Are you sure?', method: :delete %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Fileelement', new_fileelement_path %>
+<%= link_to 'Add image', new_fileelement_path %>
